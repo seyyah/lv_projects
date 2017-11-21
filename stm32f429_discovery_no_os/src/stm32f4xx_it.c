@@ -38,7 +38,9 @@ void SysTick_Handler(void)
 {
 	HAL_IncTick();
 	HAL_SYSTICK_IRQHandler();
-	  lv_tick_handler();
+
+	lv_tick_handler();
+
 #ifdef USE_RTOS_SYSTICK
 	osSystickHandler();
 #endif
