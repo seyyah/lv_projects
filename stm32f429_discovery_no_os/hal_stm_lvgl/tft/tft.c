@@ -66,7 +66,7 @@
 static void tft_fill(int32_t x1, int32_t y1, int32_t x2, int32_t y2, color_t color);
 static void tft_map(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const color_t * color_p);
 #if DISP_HW_ACC != 0
-static void tft_cpy(color_t * dest, const color_t * src, uint32_t length, opa_t opa);
+static void tft_copy(color_t * dest, const color_t * src, uint32_t length, opa_t opa);
 #endif
 
 /*LCD*/
@@ -259,7 +259,7 @@ static void tft_map(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const color_
  * @param length number of pixels in 'src'
  * @param opa opacity (0, OPA_TRANSP: transparent ... 255, OPA_COVER, fully cover)
  */
-static void tft_cpy(color_t * dest, const color_t * src, uint32_t length, opa_t opa)
+static void tft_copy(color_t * dest, const color_t * src, uint32_t length, opa_t opa)
 {
 	/*Wait for the previous operation*/
 	HAL_DMA2D_PollForTransfer(&Dma2dHandle, 100);
