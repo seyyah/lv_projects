@@ -72,6 +72,8 @@ static bool touchpad_read(lv_indev_data_t *data)
 	if(TS_State.TouchDetected != 0) {
 		data->point.x = TS_State.X;
 		data->point.y = TS_State.Y;
+		last_x = data->point.x;
+		last_y = data->point.y;
 		data->state = LV_INDEV_EVENT_PR;
 	} else {
 		data->point.x = last_x;

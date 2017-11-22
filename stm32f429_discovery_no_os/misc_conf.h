@@ -189,7 +189,7 @@
  *----------------*/
 #define USE_FONT    1
 #if USE_FONT != 0
-#define FONT_ANTIALIAS                  0   /*1: filter all fonts to get half sized, but anti-aliased letters */
+#define FONT_ANTIALIAS                  1   /*1: filter all fonts to get half sized, but anti-aliased letters */
 
 /*Built-in font usage*/
 #define USE_FONT_DEJAVU_10              0

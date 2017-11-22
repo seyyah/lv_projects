@@ -46,9 +46,11 @@ int main(void)
 
 //	stm32_test_init();
 
-	lv_label_create(lv_scr_act(), NULL);
-	lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);
-	lv_obj_set_pos(btn, 100, 100);
+//	lv_label_create(lv_scr_act(), NULL);
+//	lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);
+//	lv_obj_set_pos(btn, 100, 100);
+
+	demo_init();
 
 	ptask_create(life_led, 300, PTASK_PRIO_LOWEST, NULL);
 
