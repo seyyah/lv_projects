@@ -18,7 +18,6 @@
 
 static void SystemClock_Config(void);
 static void life_led(void * param);
-lv_obj_t *label;
 
 int main(void)
 {
@@ -35,14 +34,12 @@ int main(void)
 		HAL_Delay(50);
 	}
 
-
 	lv_init();
 
 	tft_init();
 	touchpad_init();
 
 	demo_init();
-//	lv_test_theme_1(lv_theme_night_init(210, NULL));
 
 	label = lv_label_create(lv_scr_act(), NULL);
 	lv_obj_align(label, NULL, LV_ALIGN_CENTER, 0, 0);
@@ -60,14 +57,6 @@ int main(void)
 static void life_led(void * param)
 {
   BSP_LED_Toggle(LED3);
-
-  lv_mem_monitor_t mon;
-  lv_mem_monitor(&mon);
-
-  char buf[64];
-  sprintf(buf, "used: %d, frag: %d %%", (int)mon.total_size - mon.free_size, mon.frag_pct);
-  lv_label_set_text(label, buf);
-
 }
 
 /**
