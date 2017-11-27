@@ -63,8 +63,8 @@
  **********************/
 
 /*These 3 functions are needed by LittlevGL*/
-static void tft_fill(int32_t x1, int32_t y1, int32_t x2, int32_t y2, color_t color);
-static void tft_map(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const color_t * color_p);
+static void tft_fill(int32_t x1, int32_t y1, int32_t x2, int32_t y2, lv_color_t color);
+static void tft_map(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t * color_p);
 #if DISP_HW_ACC != 0
 static void tft_copy(color_t * dest, const color_t * src, uint32_t length, opa_t opa);
 #endif
@@ -135,6 +135,7 @@ static const color_t * map_fill;
 void tft_init(void)
 {
 	lv_disp_drv_t disp_drv;
+	lv_disp_drv_init(&disp_drv);
 
 #if DISP_EXT_FB != 0
 	SDRAM_Init();
@@ -144,18 +145,18 @@ void tft_init(void)
 
 #if DISP_HW_ACC != 0
 	DMA2D_Config();
-	disp_drv.copy = tft_copy;
+	disp_drv.blend_fp = tft_copy;
 #else
-	disp_drv.copy = NULL;
+	disp_drv.blend_fp = NULL;
 #endif
 
 #if LV_VDB_DOUBLE != 0
 	DMA_Config();
 #endif
 
-	disp_drv.fill = tft_fill;
-	disp_drv.map = tft_map;
-	lv_disp_register(&disp_drv);
+	disp_drv.fill_fp = tft_fill;
+	disp_drv.map_fp = tft_map;
+	lv_disp_drv_register(&disp_drv);
 }
 
 /**********************
@@ -170,7 +171,7 @@ void tft_init(void)
  * @param y2 bottom coordinate of the rectangle
  * @param color fill color
  */
-static void tft_fill(int32_t x1, int32_t y1, int32_t x2, int32_t y2, color_t color)
+static void tft_fill(int32_t x1, int32_t y1, int32_t x2, int32_t y2, lv_color_t color)
 {
     /*Return if the area is out the screen*/
     if(x2 < 0) return;
@@ -203,7 +204,7 @@ static void tft_fill(int32_t x1, int32_t y1, int32_t x2, int32_t y2, color_t col
  * @param y2 bottom coordinate of the rectangle
  * @param color_p pointer to an array of colors
  */
-static void tft_map(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const color_t * color_p)
+static void tft_map(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t * color_p)
 {
 	/*Return if the area is out the screen*/
 	if(x2 < 0) return;

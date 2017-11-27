@@ -47,7 +47,8 @@ void touchpad_init(void)
   BSP_TS_Init(DISP_HOR_RES, DISP_VER_RES);
 
   lv_indev_drv_t indev_drv;
-  indev_drv.get_data = touchpad_read;
+  lv_indev_drv_init(&indev_drv);
+  indev_drv.read_fp = touchpad_read;
   indev_drv.type = LV_INDEV_TYPE_TOUCHPAD;
   lv_indev_register(&indev_drv);
 }

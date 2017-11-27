@@ -12,14 +12,13 @@
 #include "stm32f4xx.h"
 #include "stm32f429i_discovery.h"
 
-#include "misc/misc.h"
-#include "misc/os/ptask.h"
 #include "hal_stm_lvgl/tft/tft.h"
 #include "hal_stm_lvgl/touchpad/touchpad.h"
 #include "lvgl/lvgl.h"
 
 static void SystemClock_Config(void);
 static void life_led(void * param);
+lv_obj_t *label;
 
 int main(void)
 {
@@ -37,27 +36,23 @@ int main(void)
 	}
 
 
-	misc_init();
+	lv_init();
 
 	tft_init();
 	touchpad_init();
 
-	lv_init();
-
-//	stm32_test_init();
-
-//	lv_label_create(lv_scr_act(), NULL);
-//	lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);
-//	lv_obj_set_pos(btn, 100, 100);
-
 	demo_init();
+//	lv_test_theme_1(lv_theme_night_init(210, NULL));
 
-	ptask_create(life_led, 300, PTASK_PRIO_LOWEST, NULL);
+	label = lv_label_create(lv_scr_act(), NULL);
+	lv_obj_align(label, NULL, LV_ALIGN_CENTER, 0, 0);
+	lv_task_create(life_led, 300, LV_TASK_PRIO_LOWEST, NULL);
+
 
 	while (1)
 	{
 		HAL_Delay(10);
-		ptask_handler();
+		lv_task_handler();
 	}
 }
 
@@ -65,6 +60,14 @@ int main(void)
 static void life_led(void * param)
 {
   BSP_LED_Toggle(LED3);
+
+  lv_mem_monitor_t mon;
+  lv_mem_monitor(&mon);
+
+  char buf[64];
+  sprintf(buf, "used: %d, frag: %d %%", (int)mon.total_size - mon.free_size, mon.frag_pct);
+  lv_label_set_text(label, buf);
+
 }
 
 /**
