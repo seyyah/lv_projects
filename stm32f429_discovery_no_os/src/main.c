@@ -12,9 +12,12 @@
 #include "stm32f4xx.h"
 #include "stm32f429i_discovery.h"
 
+#include "lvgl/lvgl.h"
+
 #include "hal_stm_lvgl/tft/tft.h"
 #include "hal_stm_lvgl/touchpad/touchpad.h"
-#include "lvgl/lvgl.h"
+
+#include "lv_examples/lv_apps/demo/demo.h"
 
 static void SystemClock_Config(void);
 static void life_led(void * param);
@@ -40,11 +43,6 @@ int main(void)
 	touchpad_init();
 
 	demo_init();
-
-	label = lv_label_create(lv_scr_act(), NULL);
-	lv_obj_align(label, NULL, LV_ALIGN_CENTER, 0, 0);
-	lv_task_create(life_led, 300, LV_TASK_PRIO_LOWEST, NULL);
-
 
 	while (1)
 	{

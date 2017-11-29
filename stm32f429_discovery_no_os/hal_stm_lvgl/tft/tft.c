@@ -20,7 +20,7 @@
  *      DEFINES
  *********************/
 
-#if DISP_EXT_FB != 0
+#if TFT_EXT_FB != 0
 #define REFRESH_COUNT       ((uint32_t)0x056A)   /* SDRAM refresh counter (90MHz SDRAM clock) */
 #define SDRAM_BANK_ADDR     ((uint32_t)0xD0000000)
 /* #define SDRAM_MEMORY_WIDTH            FMC_SDRAM_MEM_BUS_WIDTH_8 */
@@ -44,7 +44,6 @@
 #define SDRAM_MODEREG_WRITEBURST_MODE_SINGLE     ((uint16_t)0x0200)
 #endif
 
-#if LV_VDB_DOUBLE != 0
 /* DMA Stream parameters definitions. You can modify these parameters to select
    a different DMA Stream and/or channel.
    But note that only DMA2 Streams are capable of Memory to Memory transfers. */
@@ -52,7 +51,6 @@
 #define DMA_CHANNEL              DMA_CHANNEL_0
 #define DMA_STREAM_IRQ           DMA2_Stream0_IRQn
 #define DMA_STREAM_IRQHANDLER    DMA2_Stream0_IRQHandler
-#endif
 
 /**********************
  *      TYPEDEFS
@@ -65,30 +63,30 @@
 /*These 3 functions are needed by LittlevGL*/
 static void tft_fill(int32_t x1, int32_t y1, int32_t x2, int32_t y2, lv_color_t color);
 static void tft_map(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t * color_p);
-#if DISP_HW_ACC != 0
-static void tft_copy(color_t * dest, const color_t * src, uint32_t length, opa_t opa);
+static void tft_flush(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t * color_p);
+#if TFT_USE_GPU != 0
+static void gpu_mem_blend(lv_color_t * dest, const lv_color_t * src, uint32_t length, lv_opa_t opa);
+static void gpu_mem_fill(lv_color_t * dest, uint32_t length, lv_color_t color);
 #endif
 
 /*LCD*/
 static void LCD_Config(void);
 void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef *hltdc);
 void HAL_LTDC_MspInit(LTDC_HandleTypeDef *hltdc);
-#if DISP_HW_ACC != 0
+#if TFT_USE_GPU != 0
 static void DMA2D_Config(void);
 #endif
 
 /*SD RAM*/
-#if DISP_EXT_FB != 0
+#if TFT_EXT_FB != 0
 static void SDRAM_Init(void);
 static void SDRAM_Initialization_Sequence(SDRAM_HandleTypeDef *hsdram, FMC_SDRAM_CommandTypeDef *Command);
 #endif
 
-/*DMA for LV_VDB_DOUBLE*/
-#if LV_VDB_DOUBLE != 0
+/*DMA to flush to frame buffer*/
 static void DMA_Config(void);
 static void DMA_TransferComplete(DMA_HandleTypeDef *han);
 static void DMA_TransferError(DMA_HandleTypeDef *han);
-#endif
 
 static void Error_Handler(void);
 /**********************
@@ -97,29 +95,27 @@ static void Error_Handler(void);
 
 static LTDC_HandleTypeDef LtdcHandle;
 
-#if DISP_HW_ACC != 0
+#if TFT_USE_GPU != 0
 static DMA2D_HandleTypeDef     Dma2dHandle;
 #endif
 
-#if DISP_EXT_FB != 0
+#if TFT_EXT_FB != 0
 SDRAM_HandleTypeDef hsdram;
 FMC_SDRAM_TimingTypeDef SDRAM_Timing;
 FMC_SDRAM_CommandTypeDef command;
 static __IO uint16_t * my_fb = (__IO uint16_t*) (SDRAM_BANK_ADDR);
 #else
-static uint16_t my_fb[DISP_HOR_RES * DISP_VER_RES];
+static uint16_t my_fb[TFT_HOR_RES * TFT_VER_RES];
 #endif
 
 
-#if LV_VDB_DOUBLE != 0
 DMA_HandleTypeDef     DmaHandle;
-static int32_t x1_fill;
-static int32_t y1_fill;
-static int32_t x2_fill;
+static int32_t x1_flush;
+static int32_t y1_flush;
+static int32_t x2_flush;
 static int32_t y2_fill;
 static int32_t y_fill_act;
-static const color_t * map_fill;
-#endif
+static const lv_color_t * buf_to_flush;
 
 /**********************
  *      MACROS
@@ -137,31 +133,70 @@ void tft_init(void)
 	lv_disp_drv_t disp_drv;
 	lv_disp_drv_init(&disp_drv);
 
-#if DISP_EXT_FB != 0
+#if TFT_EXT_FB != 0
 	SDRAM_Init();
 #endif
-
 	LCD_Config();
-
-#if DISP_HW_ACC != 0
-	DMA2D_Config();
-	disp_drv.blend_fp = tft_copy;
-#else
-	disp_drv.blend_fp = NULL;
-#endif
-
-#if LV_VDB_DOUBLE != 0
 	DMA_Config();
-#endif
 
-	disp_drv.fill_fp = tft_fill;
-	disp_drv.map_fp = tft_map;
+	disp_drv.disp_fill = tft_fill;
+	disp_drv.disp_map = tft_map;
+	disp_drv.disp_flush = tft_flush;
+#if TFT_USE_GPU != 0
+	DMA2D_Config();
+	disp_drv.mem_blend = gpu_mem_blend;
+	disp_drv.mem_fill = gpu_mem_fill;
+#endif
 	lv_disp_drv_register(&disp_drv);
+
+
 }
 
 /**********************
  *   STATIC FUNCTIONS
  **********************/
+
+/**
+ * Flush a color buffer
+ * @param x1 left coordinate of the rectangle
+ * @param x2 right coordinate of the rectangle
+ * @param y1 top coordinate of the rectangle
+ * @param y2 bottom coordinate of the rectangle
+ * @param color_p pointer to an array of colors
+ */
+static void tft_flush(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t * color_p)
+{
+	/*Return if the area is out the screen*/
+	if(x2 < 0) return;
+	if(y2 < 0) return;
+	if(x1 > TFT_HOR_RES - 1) return;
+	if(y1 > TFT_VER_RES - 1) return;
+
+	/*Truncate the area to the screen*/
+	int32_t act_x1 = x1 < 0 ? 0 : x1;
+	int32_t act_y1 = y1 < 0 ? 0 : y1;
+	int32_t act_x2 = x2 > TFT_HOR_RES - 1 ? TFT_HOR_RES - 1 : x2;
+	int32_t act_y2 = y2 > TFT_VER_RES - 1 ? TFT_VER_RES - 1 : y2;
+
+	x1_flush = act_x1;
+	y1_flush = act_y1;
+	x2_flush = act_x2;
+	y2_fill = act_y2;
+	y_fill_act = act_y1;
+	buf_to_flush = color_p;
+
+
+	  /*##-7- Start the DMA transfer using the interrupt mode #*/
+	  /* Configure the source, destination and buffer size DMA fields and Start DMA Stream transfer */
+	  /* Enable All the DMA interrupts */
+	HAL_StatusTypeDef err;
+	err = HAL_DMA_Start_IT(&DmaHandle,(uint32_t)buf_to_flush, (uint32_t)&my_fb[y_fill_act * TFT_HOR_RES + x1_flush],
+			  (x2_flush - x1_flush + 1));
+	if(err != HAL_OK)
+	{
+		while(1);	/*Halt on error*/
+	}
+}
 
 /**
  * Fill a rectangular area with a color
@@ -176,14 +211,14 @@ static void tft_fill(int32_t x1, int32_t y1, int32_t x2, int32_t y2, lv_color_t 
     /*Return if the area is out the screen*/
     if(x2 < 0) return;
     if(y2 < 0) return;
-    if(x1 > DISP_HOR_RES - 1) return;
-    if(y1 > DISP_VER_RES - 1) return;
+    if(x1 > TFT_HOR_RES - 1) return;
+    if(y1 > TFT_VER_RES - 1) return;
 
     /*Truncate the area to the screen*/
     int32_t act_x1 = x1 < 0 ? 0 : x1;
     int32_t act_y1 = y1 < 0 ? 0 : y1;
-    int32_t act_x2 = x2 > DISP_HOR_RES - 1 ? DISP_HOR_RES - 1 : x2;
-    int32_t act_y2 = y2 > DISP_VER_RES - 1 ? DISP_VER_RES - 1 : y2;
+    int32_t act_x2 = x2 > TFT_HOR_RES - 1 ? TFT_HOR_RES - 1 : x2;
+    int32_t act_y2 = y2 > TFT_VER_RES - 1 ? TFT_VER_RES - 1 : y2;
 
 	uint32_t x;
 	uint32_t y;
@@ -191,10 +226,11 @@ static void tft_fill(int32_t x1, int32_t y1, int32_t x2, int32_t y2, lv_color_t 
 	/*Fill the remaining area*/
 	for(x = act_x1; x <= act_x2; x++) {
 		for(y = act_y1; y <= act_y2; y++) {
-			my_fb[y * DISP_HOR_RES + x] = color.full;
+			my_fb[y * TFT_HOR_RES + x] = color.full;
 		}
 	}
 }
+
 
 /**
  * Put a color map to a rectangular area
@@ -209,38 +245,38 @@ static void tft_map(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_col
 	/*Return if the area is out the screen*/
 	if(x2 < 0) return;
 	if(y2 < 0) return;
-	if(x1 > DISP_HOR_RES - 1) return;
-	if(y1 > DISP_VER_RES - 1) return;
+	if(x1 > TFT_HOR_RES - 1) return;
+	if(y1 > TFT_VER_RES - 1) return;
 
 	/*Truncate the area to the screen*/
 	int32_t act_x1 = x1 < 0 ? 0 : x1;
 	int32_t act_y1 = y1 < 0 ? 0 : y1;
-	int32_t act_x2 = x2 > DISP_HOR_RES - 1 ? DISP_HOR_RES - 1 : x2;
-	int32_t act_y2 = y2 > DISP_VER_RES - 1 ? DISP_VER_RES - 1 : y2;
+	int32_t act_x2 = x2 > TFT_HOR_RES - 1 ? TFT_HOR_RES - 1 : x2;
+	int32_t act_y2 = y2 > TFT_VER_RES - 1 ? TFT_VER_RES - 1 : y2;
 
 #if LV_VDB_DOUBLE == 0
 	uint32_t y;
 	for(y = act_y1; y <= act_y2; y++) {
-		memcpy((void*)&my_fb[y * DISP_HOR_RES + act_x1],
+		memcpy((void*)&my_fb[y * TFT_HOR_RES + act_x1],
 				color_p,
 				(act_x2 - act_x1 + 1) * sizeof(my_fb[0]));
 		color_p += x2 - x1 + 1;    /*Skip the parts out of the screen*/
 	}
 #else
 
-	x1_fill = act_x1;
-	y1_fill = act_y1;
-	x2_fill = act_x2;
+	x1_flush = act_x1;
+	y1_flush = act_y1;
+	x2_flush = act_x2;
 	y2_fill = act_y2;
 	y_fill_act = act_y1;
-	map_fill = color_p;
+	buf_to_flush = color_p;
 
 
 	  /*##-7- Start the DMA transfer using the interrupt mode #*/
 	  /* Configure the source, destination and buffer size DMA fields and Start DMA Stream transfer */
 	  /* Enable All the DMA interrupts */
-	  if(HAL_DMA_Start_IT(&DmaHandle,(uint32_t)map_fill, (uint32_t)&my_fb[y_fill_act * DISP_HOR_RES + x1_fill],
-						  (x2_fill - x1_fill + 1)) != HAL_OK)
+	  if(HAL_DMA_Start_IT(&DmaHandle,(uint32_t)buf_to_flush, (uint32_t)&my_fb[y_fill_act * TFT_HOR_RES + x1_flush],
+						  (x2_flush - x1_flush + 1)) != HAL_OK)
 	  {
 	    while(1)
 	    {
@@ -251,7 +287,7 @@ static void tft_map(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_col
 }
 
 
-#if DISP_HW_ACC != 0
+#if TFT_USE_GPU != 0
 
 /**
  * Copy pixels to destination memory using opacity
@@ -260,15 +296,49 @@ static void tft_map(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_col
  * @param length number of pixels in 'src'
  * @param opa opacity (0, OPA_TRANSP: transparent ... 255, OPA_COVER, fully cover)
  */
-static void tft_copy(color_t * dest, const color_t * src, uint32_t length, opa_t opa)
+static void gpu_mem_blend(lv_color_t * dest, const lv_color_t * src, uint32_t length, lv_opa_t opa)
 {
 	/*Wait for the previous operation*/
 	HAL_DMA2D_PollForTransfer(&Dma2dHandle, 100);
+	Dma2dHandle.Init.Mode         = DMA2D_M2M_BLEND;
+	/* DMA2D Initialization */
+	if(HAL_DMA2D_Init(&Dma2dHandle) != HAL_OK)
+	{
+		/* Initialization Error */
+		while(1);
+	}
 
 	Dma2dHandle.LayerCfg[1].InputAlpha = opa;
     HAL_DMA2D_ConfigLayer(&Dma2dHandle, 1);
 	HAL_DMA2D_BlendingStart(&Dma2dHandle, (uint32_t) src, (uint32_t) dest, (uint32_t)dest, length, 1);
 }
+
+/**
+ * Copy pixels to destination memory using opacity
+ * @param dest a memory address. Copy 'src' here.
+ * @param src pointer to pixel map. Copy it to 'dest'.
+ * @param length number of pixels in 'src'
+ * @param opa opacity (0, OPA_TRANSP: transparent ... 255, OPA_COVER, fully cover)
+ */
+static void gpu_mem_fill(lv_color_t * dest, uint32_t length, lv_color_t color)
+{
+	/*Wait for the previous operation*/
+	HAL_DMA2D_PollForTransfer(&Dma2dHandle, 100);
+
+   Dma2dHandle.Init.Mode         = DMA2D_R2M;
+   /* DMA2D Initialization */
+   if(HAL_DMA2D_Init(&Dma2dHandle) != HAL_OK)
+   {
+     /* Initialization Error */
+     while(1);
+   }
+
+
+	Dma2dHandle.LayerCfg[1].InputAlpha = 0xff;
+    HAL_DMA2D_ConfigLayer(&Dma2dHandle, 1);
+	HAL_DMA2D_BlendingStart(&Dma2dHandle, (uint32_t) lv_color_to24(color), (uint32_t) dest, (uint32_t)dest, length, 1);
+}
+
 #endif
 
 static void LCD_Config(void)
@@ -329,12 +399,12 @@ static void LCD_Config(void)
 
 /* Layer1 Configuration ------------------------------------------------------*/
 
-  memset((void*)my_fb, 0x1234, DISP_HOR_RES * DISP_VER_RES);
+  memset((void*)my_fb, 0x1234, TFT_HOR_RES * TFT_VER_RES);
   /* Windowing configuration */
   pLayerCfg.WindowX0 = 0;
-  pLayerCfg.WindowX1 = DISP_HOR_RES;
+  pLayerCfg.WindowX1 = TFT_HOR_RES;
   pLayerCfg.WindowY0 = 0;
-  pLayerCfg.WindowY1 = DISP_VER_RES;
+  pLayerCfg.WindowY1 = TFT_VER_RES;
 
   /* Pixel Format configuration*/
   pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
@@ -356,8 +426,8 @@ static void LCD_Config(void)
   pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
 
   /* Configure the number of lines and number of pixels per line */
-  pLayerCfg.ImageWidth = DISP_HOR_RES;
-  pLayerCfg.ImageHeight = DISP_VER_RES;
+  pLayerCfg.ImageWidth = TFT_HOR_RES;
+  pLayerCfg.ImageHeight = TFT_VER_RES;
 
   /* Configure the LTDC */
   if(HAL_LTDC_Init(&LtdcHandle) != HAL_OK)
@@ -374,7 +444,7 @@ static void LCD_Config(void)
   }
 }
 
-#if DISP_HW_ACC != 0
+#if TFT_USE_GPU != 0
 /**
   * @brief  DMA2D Transfer completed callback
   * @param  hdma2d: DMA2D handle.
@@ -426,17 +496,17 @@ static void DMA2D_Config(void)
 
   /* Foreground Configuration */
   Dma2dHandle.LayerCfg[1].AlphaMode = DMA2D_REPLACE_ALPHA;
-  Dma2dHandle.LayerCfg[1].InputAlpha = 0x2F;
+  Dma2dHandle.LayerCfg[1].InputAlpha = 0xFF;
   Dma2dHandle.LayerCfg[1].InputColorMode = DMA2D_INPUT_RGB565;
   Dma2dHandle.LayerCfg[1].InputOffset = 0x0;
 
   /* Background Configuration */
   Dma2dHandle.LayerCfg[0].AlphaMode = DMA2D_REPLACE_ALPHA;
-  Dma2dHandle.LayerCfg[0].InputAlpha = 0x7F;
+  Dma2dHandle.LayerCfg[0].InputAlpha = 0xFF;
   Dma2dHandle.LayerCfg[0].InputColorMode = DMA2D_INPUT_RGB565;
   Dma2dHandle.LayerCfg[0].InputOffset = 0x0;
 
-  Dma2dHandle.Instance          = DMA2D;
+  Dma2dHandle.Instance   = DMA2D;
 
   /* DMA2D Initialization */
   if(HAL_DMA2D_Init(&Dma2dHandle) != HAL_OK)
@@ -588,7 +658,7 @@ void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef *hdma2d)
 }
 
 
-#if DISP_EXT_FB != 0
+#if TFT_EXT_FB != 0
 
 static void SDRAM_Init(void)
 {
@@ -819,7 +889,6 @@ void HAL_SDRAM_MspDeInit(SDRAM_HandleTypeDef *hsdram)
 #endif
 
 
-#if LV_VDB_DOUBLE != 0
 /**
   * @brief  Configure the DMA controller according to the Stream parameters
   *         defined in main.h file
@@ -887,18 +956,16 @@ static void DMA_TransferComplete(DMA_HandleTypeDef *han)
 	y_fill_act ++;
 
 	if(y_fill_act > y2_fill) {
-
+		  lv_flush_ready();
 	} else {
-	  map_fill += x2_fill - x1_fill + 1;
+	  buf_to_flush += x2_flush - x1_flush + 1;
 	  /*##-7- Start the DMA transfer using the interrupt mode ####################*/
 	  /* Configure the source, destination and buffer size DMA fields and Start DMA Stream transfer */
 	  /* Enable All the DMA interrupts */
-	  if(HAL_DMA_Start_IT(han,(uint32_t)map_fill, (uint32_t)&my_fb[y_fill_act * DISP_HOR_RES + x1_fill],
-						  (x2_fill - x1_fill + 1)) != HAL_OK)
+	  if(HAL_DMA_Start_IT(han,(uint32_t)buf_to_flush, (uint32_t)&my_fb[y_fill_act * TFT_HOR_RES + x1_flush],
+						  (x2_flush - x1_flush + 1)) != HAL_OK)
 	  {
-	    while(1)
-	    {
-	    }
+	    while(1);	/*Halt on error*/
 	  }
 	}
 }
@@ -927,7 +994,6 @@ void DMA_STREAM_IRQHANDLER(void)
     HAL_DMA_IRQHandler(&DmaHandle);
 }
 
-#endif
 
 /**
   * @brief  This function is executed in case of error occurrence.

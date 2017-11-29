@@ -44,12 +44,12 @@ static TS_StateTypeDef  TS_State;
  */
 void touchpad_init(void)
 {
-  BSP_TS_Init(DISP_HOR_RES, DISP_VER_RES);
+  BSP_TS_Init(TFT_HOR_RES, TFT_VER_RES);
 
   lv_indev_drv_t indev_drv;
   lv_indev_drv_init(&indev_drv);
   indev_drv.read_fp = touchpad_read;
-  indev_drv.type = LV_INDEV_TYPE_TOUCHPAD;
+  indev_drv.type = LV_INDEV_TYPE_POINTER;
   lv_indev_register(&indev_drv);
 }
 
@@ -75,11 +75,11 @@ static bool touchpad_read(lv_indev_data_t *data)
 		data->point.y = TS_State.Y;
 		last_x = data->point.x;
 		last_y = data->point.y;
-		data->state = LV_INDEV_EVENT_PR;
+		data->state = LV_INDEV_STATE_PR;
 	} else {
 		data->point.x = last_x;
 		data->point.y = last_y;
-		data->state = LV_INDEV_EVENT_REL;
+		data->state = LV_INDEV_STATE_REL;
 	}
 
 	return false;
