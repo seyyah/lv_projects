@@ -48,7 +48,7 @@ void touchpad_init(void)
 
   lv_indev_drv_t indev_drv;
   lv_indev_drv_init(&indev_drv);
-  indev_drv.read_fp = touchpad_read;
+  indev_drv.read = touchpad_read;
   indev_drv.type = LV_INDEV_TYPE_POINTER;
   lv_indev_drv_register(&indev_drv);
 }

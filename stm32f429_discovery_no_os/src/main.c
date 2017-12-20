@@ -20,7 +20,6 @@
 #include "lv_examples/lv_apps/demo/demo.h"
 
 static void SystemClock_Config(void);
-static void life_led(void * param);
 
 int main(void)
 {
@@ -42,19 +41,13 @@ int main(void)
 	tft_init();
 	touchpad_init();
 
-	demo_init();
+	demo_create();
 
 	while (1)
 	{
 		HAL_Delay(10);
 		lv_task_handler();
 	}
-}
-
-
-static void life_led(void * param)
-{
-  BSP_LED_Toggle(LED3);
 }
 
 /**

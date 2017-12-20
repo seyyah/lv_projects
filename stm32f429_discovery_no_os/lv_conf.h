@@ -25,9 +25,9 @@
 
 /* Horizontal and vertical resolution of the library.
  * Screen resolution multiplied by LV_DOWN_SCALE*/
-#define LV_HOR_RES          (240 << LV_ANTIALIAS)
-#define LV_VER_RES          (320 << LV_ANTIALIAS)
-#define LV_DPI              (100 << LV_ANTIALIAS)
+#define LV_HOR_RES          (240)
+#define LV_VER_RES          (320)
+#define LV_DPI              (100)
 
 /* Buffered rendering: >= LV_HOR_RES or 0 to disable buffering*/
 #define LV_VDB_SIZE         (40 * LV_HOR_RES)
@@ -71,9 +71,13 @@
 #define LV_TXT_UTF8             0
 #define LV_TXT_BREAK_CHARS      " ,.;:-_"	 	/*Can break texts on these chars*/
 
+
 /*Feature usage*/
-#define LV_NO_ANIM		0						/*1: disable all animations*/
-#define LV_NO_SHADOW	0						/*1: disable shadows*/
+#define USE_LV_ANIMATION        1               /*1: disable all animations*/
+#define USE_LV_SHADOW           1               /*1: disable shadows*/
+#define USE_LV_GROUP            1               /*1: Enable object groups (for keyboards)*/
+#define USE_LV_GPU              1               /*1: Enable GPU interface*/
+#define USE_LV_FILESYSTEM       1               /*1: Enable file system (required by images aka. lv_img)*/
 
 /*==================
  *  THEME USAGE
