@@ -148,8 +148,6 @@ void tft_init(void)
 	disp_drv.mem_fill = gpu_mem_fill;
 #endif
 	lv_disp_drv_register(&disp_drv);
-
-
 }
 
 /**********************
