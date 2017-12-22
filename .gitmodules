@@ -7,3 +7,6 @@
 [submodule "arduino_library/src"]
 	path = arduino_library/src
 	url = https://github.com/littlevgl/lvgl.git
+[submodule "arduino_library/littlevgl/src"]
+	path = arduino_library/littlevgl/src
+	url = https://github.com/littlevgl/lvgl.git
