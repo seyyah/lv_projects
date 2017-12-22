@@ -4,7 +4,18 @@ This directory contains projects where [LittlevGL](http://gl.littlev.hu) is conf
 
 Contrinuting is very welcome in his repository. Please, share if you used LittlevGL with a new bouar or MCU.
 
+## Usage
+1. Clone the repository somewhere: `git clone https://github.com/littlevgl/lv_boards.git`
+2. Step into the repository: `cd lv_boards`
+3. Initalize the submodules: `git submodule update --init`
+4. Copy/Paste a project where you want to use it (e.g. IDE workspace)
+
 ## Porojects
+
+### arduino_library
+LittlevGL as an Arduino library. 
+Copy *arduino_library/littelvgl* to your library folder
+Check the *lvlgl_test* sketch to see the proting and usage
 
 ### stm32f429_discovery_no_os
 Cheap development board with 240x320 TFT, Resistive touch pad, 180 MHz MCU with 256kB RAM + 64 MBit SDRAM and GPU.
