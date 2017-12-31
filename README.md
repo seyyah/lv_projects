@@ -1,6 +1,6 @@
 # LittlevGL ported boards and microcontrollers
 
-This repository contains projects where [LittlevGL](http://gl.littlev.hu) is configures for a development board or microcontroller. 
+This repository contains projects where [LittlevGL](https://littlevgl.com) is configures for a development board or microcontroller. 
 
 Contributing is very welcome! Plaase, share with others if you used LittlevGL with a new board or MCU.
 
