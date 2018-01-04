@@ -10,3 +10,12 @@
 [submodule "arduino_library/littlevgl/src"]
 	path = arduino_library/littlevgl/src
 	url = https://github.com/littlevgl/lvgl.git
+[submodule "linux_frame_buffer/lvgl"]
+	path = linux_frame_buffer/lvgl
+	url = https://github.com/littlevgl/lvgl.git
+[submodule "linux_frame_buffer/lv_examples"]
+	path = linux_frame_buffer/lv_examples
+	url = https://github.com/littlevgl/lv_examples.git
+[submodule "linux_frame_buffer/lv_drivers"]
+	path = linux_frame_buffer/lv_drivers
+	url = https://github.com/littlevgl/lv_drivers.git
