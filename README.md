@@ -21,6 +21,16 @@ Check the *lvlgl_test* sketch to see the proting and usage
 Cheap development board with 240x320 TFT, Resistive touch pad, 180 MHz MCU with 256kB RAM + 64 MBit SDRAM and GPU.
 The CubeMX drivers are used to initilaize the peripheries. In *hal_stm_lvgl/tft/tft.h* you can enable/disable external frame buffer placement and GPU usage.
 
+### pic32mx_r61581_no_os
+A custom PIC32MX695H based board drives a 480x320 display with R61581 display controller via software parallel port.
+The MCU has 512kB flash, 128 kB RAM and tuns at 80 MHz. It able to applay font anti-aliasing and even screen sized animations. 
+Touch pad driver is not added yet.
+
+
+### pic32mx_ssd1963_no_os
+A custom PIC32MX695H based board drives a 800x480 display with SSD1963 display controller via software parallel port.
+Still work in progrss.
+
 ### linux_frame_buffer
 Directly use Linux fame buffer (e.g. /dev/fb0) as frame buffer. Demonstrates the usage winth embedded Linux systems. The project is created in Eclipse CDT. Learn more here: [LittlevGL Blog Post](https://littlevgl.com/blog/23/embedded-gui-using-linux-frame-buffer-device-with-littlevgl)
 
