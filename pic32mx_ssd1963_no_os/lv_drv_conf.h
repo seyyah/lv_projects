@@ -85,17 +85,17 @@
 /*----------------
  *    SSD1963
  *--------------*/
-#define USE_SSD1963         0
+#define USE_SSD1963         1
 #if USE_SSD1963
 #define SSD1963_HOR_RES     LV_HOR_RES
 #define SSD1963_VER_RES     LV_VER_RES
-#define SSD1963_HDP         479
-#define SSD1963_HT          531
-#define SSD1963_HPS         43
-#define SSD1963_LPS         8
+#define SSD1963_HDP         799
+#define SSD1963_HT          900
+#define SSD1963_HPS         50
+#define SSD1963_LPS         10
 #define SSD1963_HPW         10
-#define SSD1963_VDP         271
-#define SSD1963_VT          288
+#define SSD1963_VDP         479
+#define SSD1963_VT          520
 #define SSD1963_VPS         12
 #define SSD1963_FPS         4
 #define SSD1963_VPW         10
@@ -108,22 +108,24 @@
 /*----------------
  *    R61581
  *--------------*/
-#define USE_R61581          1
+#define USE_R61581          0
 #if USE_R61581 != 0
 #define R61581_HOR_RES      LV_HOR_RES
 #define R61581_VER_RES      LV_VER_RES
-#define R61581_HSPL         0       /*HSYNC signal polarity*/
-#define R61581_HSL          10      /*HSYNC length (Not Implemented)*/
-#define R61581_HFP          10      /*Horitontal Front poarch (Not Implemented)*/
-#define R61581_HBP          10      /*Horitontal Back poarch (Not Implemented */
-#define R61581_VSPL         0       /*VSYNC signal polarity*/
-#define R61581_VSL          10      /*VSYNC length (Not Implemented)*/
-#define R61581_VFP          8       /*Vertical Front poarch*/
-#define R61581_VBP          8       /*Vertical Back poarch */
-#define R61581_DPL          0       /*DCLK signal polarity*/
-#define R61581_EPL          1       /*ENABLE signal polarity*/
-#define R61581_ORI          0       /*0, 180*/
-#define R61581_LV_COLOR_DEPTH 16    /*Fix 16 bit*/
+#define R61581_HDP          479
+#define R61581_HT           531
+#define R61581_HPS          43
+#define R61581_LPS          8
+#define R61581_HPW          10
+#define R61581_VDP          271
+#define R61581_VT           319
+#define R61581_VPS          12
+#define R61581_FPS          4
+#define R61581_VPW          10
+#define R61581_HS_NEG       0       /*Negative hsync*/
+#define R61581_VS_NEG       0       /*Negative vsync*/
+#define R61581_ORI          180     /*0, 90, 180, 270*/
+#define R61581_LV_COLOR_DEPTH 16
 #endif
 
 /*------------------------------

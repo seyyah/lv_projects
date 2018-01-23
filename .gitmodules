@@ -28,3 +28,12 @@
 [submodule "pic32mx_r61581_no_os/lv_drivers"]
 	path = pic32mx_r61581_no_os/lv_drivers
 	url = https://github.com/littlevgl/lv_drivers.git
+[submodule "pic32mx_ssd1963_no_os/lv_drivers"]
+	path = pic32mx_ssd1963_no_os/lv_drivers
+	url = https://github.com/littlevgl/lv_drivers.git
+[submodule "pic32mx_ssd1963_no_os/lv_examples"]
+	path = pic32mx_ssd1963_no_os/lv_examples
+	url = https://github.com/littlevgl/lv_examples.git
+[submodule "pic32mx_ssd1963_no_os/lvgl"]
+	path = pic32mx_ssd1963_no_os/lvgl
+	url = https://github.com/littlevgl/lvgl.git
