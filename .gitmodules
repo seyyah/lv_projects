@@ -37,3 +37,9 @@
 [submodule "pic32mx_ssd1963_no_os/lvgl"]
 	path = pic32mx_ssd1963_no_os/lvgl
 	url = https://github.com/littlevgl/lvgl.git
+[submodule "stm32f746_discovery_no_os/lv_examples"]
+	path = stm32f746_discovery_no_os/lv_examples
+	url = https://github.com/littlevgl/lv_examples.git
+[submodule "stm32f746_discovery_no_os/lvgl"]
+	path = stm32f746_discovery_no_os/lvgl
+	url = https://github.com/littlevgl/lvgl.git
