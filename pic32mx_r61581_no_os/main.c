@@ -35,7 +35,7 @@ static void life_blink(void *param);
 /**********************
  *  STATIC VARIABLES
  **********************/
-
+LV_IMG_DECLARE(panda);
 /**********************
  *      MACROS
  **********************/
@@ -87,6 +87,9 @@ int main(void)
     
     /*Create a demo GUI*/
     demo_create();
+    
+    lv_obj_t * img = lv_img_create(lv_scr_act(), NULL);
+    lv_img_set_src(img, &panda);
     
     /*Main while(1)*/
     while(1) {

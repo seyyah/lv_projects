@@ -44,6 +44,11 @@
                          projectFiles="true">
             <itemPath>lv_examples/lv_tests/lv_test_group/lv_test_group.h</itemPath>
           </logicalFolder>
+          <logicalFolder name="lv_test_misc"
+                         displayName="lv_test_misc"
+                         projectFiles="true">
+            <itemPath>lv_examples/lv_tests/lv_test_misc/lv_test_task.h</itemPath>
+          </logicalFolder>
           <logicalFolder name="lv_test_obj" displayName="lv_test_obj" projectFiles="true">
             <itemPath>lv_examples/lv_tests/lv_test_obj/lv_test_obj.h</itemPath>
           </logicalFolder>
@@ -191,8 +196,6 @@
           </logicalFolder>
           <logicalFolder name="7_fonts" displayName="7_fonts" projectFiles="true">
             <itemPath>lv_examples/lv_tutorial/7_fonts/lv_tutorial_fonts.h</itemPath>
-            <itemPath>lv_examples/lv_tutorial/7_fonts/ubuntu_40_cyrillic.h</itemPath>
-            <itemPath>lv_examples/lv_tutorial/7_fonts/ubuntu_40_ascii.h</itemPath>
           </logicalFolder>
           <logicalFolder name="8_animations"
                          displayName="8_animations"
@@ -205,6 +208,7 @@
             <itemPath>lv_examples/lv_tutorial/9_responsive/lv_tutorial_responsive.h</itemPath>
           </logicalFolder>
         </logicalFolder>
+        <itemPath>lv_examples/lv_ex_conf_templ.h</itemPath>
         <itemPath>lv_examples/lv_examples.h</itemPath>
       </logicalFolder>
       <logicalFolder name="lvgl" displayName="lvgl" projectFiles="true">
@@ -231,55 +235,7 @@
         </logicalFolder>
         <logicalFolder name="lv_misc" displayName="lv_misc" projectFiles="true">
           <logicalFolder name="lv_fonts" displayName="lv_fonts" projectFiles="true">
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_80_latin_ext_a.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_80_cyrillic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_40_cyrillic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_30_latin_ext_a.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_10_sup.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_60_file.h</itemPath>
             <itemPath>lvgl/lv_misc/lv_fonts/lv_symbol_def.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_60_basic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_30_feedback.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_10_latin_ext_b.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_10_latin_ext_a.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_80_file.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_20_file.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_20.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_20_cyrillic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_40_latin_ext_b.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_80_latin_ext_b.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_40_file.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_10_basic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_80_basic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_80_sup.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_20_latin_ext_b.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_20_feedback.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_10_cyrillic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_40.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_10.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_30_basic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_40_feedback.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_80_feedback.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_60_latin_ext_a.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_60_cyrillic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_80.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_60_feedback.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_60_latin_ext_b.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_30_latin_ext_b.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_40_basic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_20_sup.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_40_sup.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_30_cyrillic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_10_file.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_20_basic.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_30_file.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_60.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_30_sup.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_60_sup.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_10_feedback.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_20_latin_ext_a.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_30.h</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_40_latin_ext_a.h</itemPath>
           </logicalFolder>
           <itemPath>lvgl/lv_misc/lv_area.h</itemPath>
           <itemPath>lvgl/lv_misc/lv_ll.h</itemPath>
@@ -370,7 +326,7 @@
       <logicalFolder name="lv_examples" displayName="lv_examples" projectFiles="true">
         <logicalFolder name="lv_apps" displayName="lv_apps" projectFiles="true">
           <logicalFolder name="benchmark" displayName="benchmark" projectFiles="true">
-            <itemPath>lv_examples/lv_apps/benchmark/img_benchmark_bg.c</itemPath>
+            <itemPath>lv_examples/lv_apps/benchmark/benchmark_bg.c</itemPath>
             <itemPath>lv_examples/lv_apps/benchmark/benchmark.c</itemPath>
           </logicalFolder>
           <logicalFolder name="demo" displayName="demo" projectFiles="true">
@@ -392,6 +348,11 @@
                          displayName="lv_test_group"
                          projectFiles="true">
             <itemPath>lv_examples/lv_tests/lv_test_group/lv_test_group.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="lv_test_misc"
+                         displayName="lv_test_misc"
+                         projectFiles="true">
+            <itemPath>lv_examples/lv_tests/lv_test_misc/lv_test_task.c</itemPath>
           </logicalFolder>
           <logicalFolder name="lv_test_obj" displayName="lv_test_obj" projectFiles="true">
             <itemPath>lv_examples/lv_tests/lv_test_obj/lv_test_obj.c</itemPath>
@@ -534,15 +495,18 @@
                          displayName="5_antialiasing"
                          projectFiles="true">
             <itemPath>lv_examples/lv_tutorial/5_antialiasing/lv_tutorial_antialiasing.c</itemPath>
+            <itemPath>lv_examples/lv_tutorial/5_antialiasing/apple_icon_alpha.c</itemPath>
+            <itemPath>lv_examples/lv_tutorial/5_antialiasing/apple_icon_chroma.c</itemPath>
           </logicalFolder>
           <logicalFolder name="6_images" displayName="6_images" projectFiles="true">
             <itemPath>lv_examples/lv_tutorial/6_images/lv_tutorial_images.c</itemPath>
-            <itemPath>lv_examples/lv_tutorial/6_images/img_red_flower.c</itemPath>
+            <itemPath>lv_examples/lv_tutorial/6_images/red_flower.c</itemPath>
           </logicalFolder>
           <logicalFolder name="7_fonts" displayName="7_fonts" projectFiles="true">
             <itemPath>lv_examples/lv_tutorial/7_fonts/lv_tutorial_fonts.c</itemPath>
-            <itemPath>lv_examples/lv_tutorial/7_fonts/ubuntu_40_ascii.c</itemPath>
-            <itemPath>lv_examples/lv_tutorial/7_fonts/ubuntu_40_cyrillic.c</itemPath>
+            <itemPath>lv_examples/lv_tutorial/7_fonts/arial_cyrillic_20.c</itemPath>
+            <itemPath>lv_examples/lv_tutorial/7_fonts/arial_math_20.c</itemPath>
+            <itemPath>lv_examples/lv_tutorial/7_fonts/arial_ascii_20.c</itemPath>
           </logicalFolder>
           <logicalFolder name="8_animations"
                          displayName="8_animations"
@@ -579,54 +543,22 @@
         </logicalFolder>
         <logicalFolder name="lv_misc" displayName="lv_misc" projectFiles="true">
           <logicalFolder name="lv_fonts" displayName="lv_fonts" projectFiles="true">
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_80.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_30_latin_ext_a.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_20_feedback.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_10_cyrillic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_60_latin_ext_a.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_80_sup.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_30_latin_ext_b.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_80_cyrillic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_60_cyrillic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_30_file.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_40_file.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_30_basic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_10_feedback.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_60_file.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_30_sup.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_40_cyrillic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_40_latin_ext_a.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_30_feedback.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_20_latin_ext_a.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_60_latin_ext_b.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_80_file.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_60_feedback.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_40_feedback.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_20_cyrillic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_60_sup.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_10_sup.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_20_sup.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_10_basic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_30_cyrillic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_60_basic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_80_latin_ext_a.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_60.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_40_sup.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_80_feedback.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_20.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_20_latin_ext_b.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_10.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_20_file.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_40.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_30.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_20_basic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_40_basic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_40_latin_ext_b.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_80_basic.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_10_latin_ext_b.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/symbol_10_file.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_80_latin_ext_b.c</itemPath>
-            <itemPath>lvgl/lv_misc/lv_fonts/dejavu_10_latin_ext_a.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_symbol_30.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_40_cyrillic.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_40.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_40_latin_sup.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_symbol_20.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_30_latin_sup.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_20_latin_sup.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_symbol_10.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_symbol_40.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_10.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_30_cyrillic.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_20.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_10_latin_sup.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_20_cyrillic.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_10_cyrillic.c</itemPath>
+            <itemPath>lvgl/lv_misc/lv_fonts/lv_font_dejavu_30.c</itemPath>
           </logicalFolder>
           <itemPath>lvgl/lv_misc/lv_font.c</itemPath>
           <itemPath>lvgl/lv_misc/lv_circ.c</itemPath>
@@ -639,6 +571,7 @@
           <itemPath>lvgl/lv_misc/lv_ll.c</itemPath>
           <itemPath>lvgl/lv_misc/lv_color.c</itemPath>
           <itemPath>lvgl/lv_misc/lv_txt.c</itemPath>
+          <itemPath>lvgl/lv_misc/lv_math.c</itemPath>
           <itemPath>lvgl/lv_misc/lv_ufs.c</itemPath>
           <itemPath>lvgl/lv_misc/lv_trigo.c</itemPath>
         </logicalFolder>
@@ -685,6 +618,7 @@
         <itemPath>mcu_drv/delay.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
+      <itemPath>panda.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -709,7 +643,7 @@
         <targetDevice>PIC32MX695F512H</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PICkit3PlatformTool</platformTool>
+        <platformTool>ICD3PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>1.44</languageToolchainVersion>
         <platform>2</platform>
@@ -763,6 +697,7 @@
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
         <property key="use-indirect-calls" value="false"/>
+        <appendMe value="-fdata-sections -ffunction-sections"/>
       </C32>
       <C32-AR>
         <property key="additional-options-chop-files" value="false"/>
@@ -824,6 +759,7 @@
         <property key="symbol-stripping" value=""/>
         <property key="trace-symbols" value=""/>
         <property key="warn-section-align" value="false"/>
+        <appendMe value="--gc-sections"/>
       </C32-LD>
       <C32CPP>
         <property key="additional-warnings" value="false"/>
@@ -910,7 +846,6 @@
         <property key="UART6" value="true"/>
         <property key="USB" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>

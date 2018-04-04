@@ -18,6 +18,7 @@
 #include "hal_stm_lvgl/touchpad/touchpad.h"
 
 #include "lv_examples/lv_apps/demo/demo.h"
+#include "lv_examples/lv_apps/benchmark/benchmark.h"
 
 static void SystemClock_Config(void);
 
@@ -42,6 +43,8 @@ int main(void)
 	touchpad_init();
 
 	demo_create();
+
+//	benchmark_create();
 
 	while (1)
 	{
