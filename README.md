@@ -21,6 +21,10 @@ Check the *lvlgl_test* sketch to see the proting and usage
 Cheap development board with 240x320 TFT, Resistive touch pad, 180 MHz MCU with 256kB RAM + 64 MBit SDRAM and GPU.
 The CubeMX drivers are used to initilaize the peripheries. In *hal_stm_lvgl/tft/tft.h* you can enable/disable external frame buffer placement and GPU usage.
 
+### stm32f469_discovery_no_os
+STM development board with 800x480 TFT and MIPI DSI interface, capacitive touch screen, 180 MHz MCU with 324kB RAM + 128 MBit SDRAM and GPU.
+The CubeMX drivers are used to initilaize the peripheries. In *hal_stm_lvgl/tft/tft.h* you can enable/disable external frame buffer placement and GPU usage.
+
 ### stm32f746_discovery_no_os
 STM development board with 480x272 TFT, Capacitive touch pad, 216 MHz MCU with 320kB RAM + 64 MBit SDRAM and GPU.
 The CubeMX drivers are used to initilaize the peripheries. Solution uses frame buffer placed in the external SRAM memory. GPU is configurable over USE_LV_GPU define.
