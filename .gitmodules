@@ -49,3 +49,9 @@
 [submodule "esp32_ili9341/lv_examples"]
 	path = esp32_ili9341/lv_examples
 	url = https://github.com/littlevgl/lv_examples.git
+[submodule "stm32f469_discovery_no_os/lv_examples"]
+	path = stm32f469_discovery_no_os/lv_examples
+	url = https://github.com/littlevgl/lv_examples.git
+[submodule "stm32f469_discovery_no_os/lvgl"]
+	path = stm32f469_discovery_no_os/lvgl
+	url = https://github.com/littlevgl/lvgl.git
