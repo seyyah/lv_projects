@@ -1,13 +1,11 @@
 
 #include "stm32f7xx.h"
-#include "stm32746g_discovery.h"
-
 #include "lvgl/lvgl.h"
 
 #include "hal_stm_lvgl/tft/tft.h"
 #include "hal_stm_lvgl/touchpad/touchpad.h"
 
-#include "demo.h"
+#include "lv_examples/lv_apps/demo/demo.h"
 
 static void SystemClock_Config(void);
 
@@ -20,10 +18,10 @@ int main(void)
     SystemClock_Config();
 
     /*Start up indication*/
-    BSP_LED_Init(LED1);
+//    BSP_LED_Init(LED1);
     uint8_t i;
     for (i = 0; i < 8; i++) {
-        BSP_LED_Toggle(LED1);
+//        BSP_LED_Toggle(LED1);
         HAL_Delay(50);
     }
 
