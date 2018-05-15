@@ -30,8 +30,8 @@ int main(void)
     tft_init();
     touchpad_init();
 
-    demo_create();
 
+    demo_create();
     while (1)
     {
         HAL_Delay(5);

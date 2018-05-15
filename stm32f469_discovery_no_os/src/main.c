@@ -41,7 +41,8 @@ int main(void)
   tft_init();
   touchpad_init();
 
-  demo_create();
+//  demo_create();
+  benchmark_create();
 
   while (1)
   {
