@@ -15,7 +15,10 @@ Contributing is very welcome! Plaase, share with others if you used LittlevGL wi
 ### arduino_library
 LittlevGL as an Arduino library. 
 Copy *arduino_library/littelvgl* to your library folder
-Check the *lvlgl_test* sketch to see the proting and usage
+Check the *lvgl_test* sketch to see the proting and usage
+
+### esp32_ili9431
+Driving an 320x240 TFT with ILI9432 controller via SPI using ESP32. The project is craeted in Eclipse using [ESP IDF](https://esp-idf.readthedocs.io/en/latest/). (Getting started guide [here](https://esp-idf.readthedocs.io/en/v1.0/eclipse-setup.html)) To link LittlevGL and lv_examples with ESP-IDF you need to add component.mk files to each directory. Rename `lvgl_component.mk` and `lv_example_component.mk` to `component.mk` and copy to the lvgl and lv_examples directories.  
 
 ### stm32f429_discovery_no_os
 Cheap development board with 240x320 TFT, Resistive touch pad, 180 MHz MCU with 256kB RAM + 64 MBit SDRAM and GPU.
