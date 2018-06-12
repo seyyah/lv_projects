@@ -3,7 +3,7 @@
 void my_disp_flush(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t *color_array)
 {
 
-  /*TODO copy 'color_array' to the specifed coordinatef your disaply.*/
+  /*TODO copy 'color_array' to the specifed coordinats of your disaply.*/
 
 
   /*Tell the flushing is ready*/
