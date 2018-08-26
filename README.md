@@ -2,7 +2,11 @@
 
 This repository contains projects where [LittlevGL](https://littlevgl.com) is configures for a development board or microcontroller. 
 
-Contributing is very welcome! Plaase, share with others if you used LittlevGL with a new board or MCU.
+Contributing is very welcome! Please, share with others if you used LittlevGL with a new board or MCU.
+
+## Links to blogposts
+- Raspberry: http://www.vk3erw.com/index.php/16-software
+- i.MX RT1050: https://mcuoneclipse.com/2018/08/12/tutorial-open-source-embedded-gui-library-littlevgl-with-i-mx-rt1050-evk/
 
 ## Usage
 1. Clone the repository somewhere: `git clone https://github.com/littlevgl/lv_boards.git`
