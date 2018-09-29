@@ -1,0 +1,10 @@
+Debug/
+bin/
+obj/
+.settings/
+lv_dev_tools/
+**/*.o
+demo
+.pydevproject
+*.depend
+*.layout
