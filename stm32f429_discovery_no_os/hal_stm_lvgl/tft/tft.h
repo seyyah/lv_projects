@@ -16,8 +16,8 @@
 /*********************
  *      DEFINES
  *********************/
-#define TFT_HOR_RES 240
-#define TFT_VER_RES 320
+#define TFT_HOR_RES LV_HOR_RES
+#define TFT_VER_RES LV_VER_RES
 
 #define TFT_EXT_FB		1		/*Frame buffer is located into an external SDRAM*/
 #define TFT_USE_GPU		1		/*Enable hardware accelerator*/
