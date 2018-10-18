@@ -14,12 +14,12 @@
 /*******************
  *   TEST USAGE    
  *******************/
-#define USE_LV_TESTS        0
+#define USE_LV_TESTS        1
 
 /*******************
  * TUTORIAL USAGE    
  *******************/
-#define USE_LV_TUTORIALS   0
+#define USE_LV_TUTORIALS   1
 
 
 /*********************
